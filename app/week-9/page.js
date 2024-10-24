@@ -4,7 +4,7 @@ import React from 'react';
 import { useUserAuth } from "./_utils/auth-context";  // Ensure this path is correct
 import { useRouter } from 'next/navigation';  // Correct import for useRouter
 
-export default function Page() {
+function Page() {
   const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
   const router = useRouter();
 
@@ -38,3 +38,4 @@ export default function Page() {
     </main>
   );
 }
+export default Page;
