@@ -1,40 +1,40 @@
-"use client";
+"use client";  // Required for client-side code in Next.js 13+
 
-import { useState } from 'react';
-import NewItem from './new-item'; 
-import ItemList from './item-list';  
-import itemsData from './items.json';
-import MealIdeas from './meal-ideas' 
+import React from 'react';
+import { useUserAuth } from "./_utils/auth-context";  // Ensure this path is correct
+import { useRouter } from 'next/navigation';  // Correct import for useRouter
 
 export default function Page() {
-  const [selectedItemName, setSelectedItemName] = useState(null);
-  const [items, setItems] = useState(itemsData);
-  const handleAddItem = (newItem) => {
-    setItems(prevItems => [...prevItems, newItem]);};
-  const handleItemSelect = (item) => {
-    const cleanedName = item.name
-      .split(",")[0]  
-      .replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|[\u2011-\u26FF])/g, '')  
-      .trim();  
+  const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
+  const router = useRouter();
 
-    setSelectedItemName(cleanedName);
+  const handleLogin = async () => {
+    try {
+      await gitHubSignIn();
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await firebaseSignOut();
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8"> 
-      <h1 className="text-4xl font-bold text-white mb-8">Shopping List</h1>
-      
-      <div className="flex space-x-4">
-        <div className="flex-1 mb-12">
-          <NewItem onAddItem={handleAddItem} />  
-          <ItemList items={items} onItemSelect={handleItemSelect} /> 
-        </div>
-  
-        <div className="flex-1">
-          {selectedItemName && <MealIdeas ingredient={selectedItemName} />}  
-      </div>
-    </div>
-    </div>
+    <main>
+      {!user ? (
+        <button onClick={handleLogin}>Login with GitHub</button>
+      ) : (
+        <>
+          <p>Welcome, {user.displayName} ({user.email})</p>
+          <button onClick={handleLogout}>Logout</button>
+          <button onClick={() => router.push('/week-9/shopping-list')}>Go to Shopping List</button>
+        </>
+      )}
+    </main>
   );
-  }
-
+}
