@@ -1,10 +1,10 @@
 "use client";  // Required for client-side code in Next.js 13+
 
 import React from 'react';
-import { useUserAuth } from "./_utils/auth-context";  // Ensure this path is correct
+import { useUserAuth } from './_utils/auth-context';
 import { useRouter } from 'next/navigation';  // Correct import for useRouter
 
-function Page() {
+export default function Page() {
   const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
   const router = useRouter();
 
@@ -37,5 +37,4 @@ function Page() {
       )}
     </main>
   );
-}
-export default Page;
+};

@@ -4,24 +4,13 @@ import { useState } from 'react';
 import NewItem from './new-item'; 
 import ItemList from './item-list';  
 import itemsData from './items.json';
-import MealIdeas from './meal-ideas';
-import { useUserAuth } from "../_utils/auth-context";
-import { Redirect } from 'react-router-dom';
+import MealIdeas from './meal-ideas' 
 
 export default function Page() {
-  const { user } = useUserAuth();  // Use the useUserAuth hook to get the user object
-
-  if (!user) {
-    return <Redirect to="/" />;  // Redirect to landing page if user is not logged in
-  }
-
   const [selectedItemName, setSelectedItemName] = useState(null);
   const [items, setItems] = useState(itemsData);
-
   const handleAddItem = (newItem) => {
-    setItems(prevItems => [...prevItems, newItem]);
-  };
-
+    setItems(prevItems => [...prevItems, newItem]);};
   const handleItemSelect = (item) => {
     const cleanedName = item.name
       .split(",")[0]  
@@ -43,8 +32,9 @@ export default function Page() {
   
         <div className="flex-1">
           {selectedItemName && <MealIdeas ingredient={selectedItemName} />}  
-        </div>
       </div>
     </div>
+    </div>
   );
-}
+  };
+
