@@ -8,14 +8,14 @@ import { getItems, addItem } from '../_services/shopping-list-service';  // Impo
 
 export default function Page({ user }) {  
   const [selectedItemName, setSelectedItemName] = useState(null);
-  const [items, setItems] = useState([]);  // Initialize with an empty array
+  const [items, setItems] = useState([]);  
 
-  // Function to handle adding a new item
+
   const handleAddItem = async (newItem) => {
     try {
-      const newItemId = await addItem(user.uid, newItem);  // Add the new item to Firestore and get the id
-      const newItemWithId = { ...newItem, id: newItemId };  // Add the id to the new item
-      setItems(prevItems => [...prevItems, newItemWithId]);  // Update local state with the new item
+      const newItemId = await addItem(user.uid, newItem);  
+      const newItemWithId = { ...newItem, id: newItemId }; 
+      setItems(prevItems => [...prevItems, newItemWithId]);  
     } catch (error) {
       console.error("Error adding item:", error);
     }
@@ -54,10 +54,7 @@ export default function Page({ user }) {
       
       <div className="flex space-x-4">
         <div className="flex-1 mb-12">
-          {/* NewItem Form for Adding Items */}
           <NewItem onAddItem={handleAddItem} />
-
-          {/* Display the sorted list with sort buttons */}
           <ItemList items={items} onItemSelect={handleItemSelect} />
         </div>
   
