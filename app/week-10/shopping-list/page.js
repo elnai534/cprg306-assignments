@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import NewItem from './new-item'; 
 import ItemList from './item-list';  
 import MealIdeas from './meal-ideas'; 
-import { getItems, addItem } from '../_services/shopping-list-service';  // Import the correct functions
+import { getItems, addItem } from '../_services/shopping-list-service'; 
 
 export default function Page({ user }) {  
   const [selectedItemName, setSelectedItemName] = useState(null);
@@ -21,11 +21,11 @@ export default function Page({ user }) {
     }
   };
 
-  // Function to load items for the current user
+  // //loading items for users
   const loadItems = async (user) => {
     try {
-      const fetchedItems = await getItems(user.uid);  // Call getItems with user.uid
-      setItems(fetchedItems);  // Set the state of items to the result of getItems
+      const fetchedItems = await getItems(user.uid);  // getItems for UserID
+      setItems(fetchedItems);  // set item state to result of getItems 
     } catch (error) {
       console.error("Error loading items:", error);
     }
@@ -34,11 +34,11 @@ export default function Page({ user }) {
   // useEffect hook to call loadItems when the component mounts
   useEffect(() => {
     if (user) {  
-      loadItems(user);  // Pass the user object
+      loadItems(user);  // passing object user
     }
   }, [user]);
 
-  // Function to handle selecting an item and cleaning its name
+  // selecting item and clearing the name
   const handleItemSelect = (item) => {
     const cleanedName = item.name
       .split(",")[0]  
